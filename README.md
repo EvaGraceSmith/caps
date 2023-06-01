@@ -1,16 +1,8 @@
-# caps
 
-[Hayden Cooper](https://github.com/Hcooper23)
-[Reece Renninger](https://github.com/ReeceRenninger)
-[Katherine Lee](https://github.com/KatiLee)
-[Dustin Yelland](https://github.com/dustinyschild)
-[Mark R Smith](https://github.com/markmrsmith)
 
 # LAB - Class 11: Event Driven Applications
 
-## Project: Lab 11: Event Driven Applications
-
-### Author: Reece Renninger
+### Author: Eva Grace Smith
 
 ### Problem Domain
 
@@ -26,8 +18,8 @@ Major functionality to cover in lab:
 
 ### Links and Resources
 
-- [GitHub Actions ci/cd](https://github.com/ReeceRenninger/caps/actions/new)
-- [back-end server url](http://xyz.com) (when applicable)
+- [GitHub Actions ci/cd](https://github.com/EvaGraceSmith/caps/actions)
+<!-- - [back-end server url](http://xyz.com) (when applicable) -->
 
 ### Collaborators
 
