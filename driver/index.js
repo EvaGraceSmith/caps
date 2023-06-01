@@ -5,7 +5,9 @@ const capsSocket = io.connect('http://localhost:3000/caps');
 
 capsSocket.on('connect', () => {
   console.log('Driver connected to CAPS hub');
+  capsSocket.emit('join', '1-206-flowers');
 });
+
 
 capsSocket.on('disconnect', () => {
   console.log('Driver disconnected from CAPS hub');

@@ -1,8 +1,15 @@
 const { simulatePickup, handleDelivered } = require('./handler');
+
 const eventPool = require('../eventPool');
+
+const Chance = require('chance');
+
+const chance = new Chance();
 
 // Mock console.log to capture the output
 const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation();
+//spy on eventPool.emit
+jest.spyOn(eventPool, 'emit');
 
 describe('Vendor Event Handlers', () => {
   afterEach(() => {
@@ -11,19 +18,19 @@ describe('Vendor Event Handlers', () => {
 
   test('simulatePickup should emit pickup event with the correct payload', () => {
     const storeName = '1-206-flowers';
-    const orderId = '9e8fdd8e-719a-5b50-8b8d-addf8d0c259d'; // Replace with your non-regex order ID
-    const address= '';
+    orderId = chance.guid(),
+    customer = chance.name(),
+    address = chance.address(),
 
-        // Mock the emit function in the eventPool module
-        eventPool.emit = jest.fn();
 
-    simulatePickup(storeName);
+
+    simulatePickup(storeName, orderId, customer, address);
 
     expect(eventPool.emit).toHaveBeenCalledWith('pickup', expect.objectContaining({
       store: storeName,
-      orderId: expect.any(String),
-      customer: expect.any(String),
-      address: expect.any(String),
+      orderId: orderId,
+      customer: customer,
+      address: address,
     }));
   });
 
@@ -36,4 +43,3 @@ describe('Vendor Event Handlers', () => {
     expect(consoleLogSpy).toHaveBeenCalledWith(expectedMessage);
   });
 });
-

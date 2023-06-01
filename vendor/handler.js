@@ -1,14 +1,12 @@
 const eventPool = require('../eventPool');
-const Chance = require('chance');
 
-const chance = new Chance();
 
-function simulatePickup(store) {
+function simulatePickup(store, orderId, customer, address) {
   const order = {
-    store,
-    orderId: chance.guid(),
-    customer: chance.name(),
-    address: chance.address(),
+    store: store,
+    orderId: orderId,
+    customer: customer,
+    address: address,
   };
 
   eventPool.emit('pickup', order);
