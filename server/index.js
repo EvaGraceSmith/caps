@@ -82,7 +82,7 @@ capsNamespace.on('connection', (socket) => {
 
 
   //TODO: Step THREE.  create an event called GET-MESSAGES, that the recipient can emit so that they can obtain any missed messages
-  socket.on('GET-MESSAGES', (payload) => {
+  socket.on('get-all-my-orders', (payload) => {
     console.log('attempting to get messages');
     let currentQueue = messageQueue.read(payload.queueId);
     if(currentQueue && currentQueue.data){
