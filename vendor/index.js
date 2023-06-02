@@ -24,6 +24,7 @@ setInterval(() => {
     const order = {
         store: '1-206-flowers',
         orderId: generateOrderId(),
+        driverId: 0,
         customer: generateCustomerName(),
         address: generateAddress(),
     };
