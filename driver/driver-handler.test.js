@@ -4,6 +4,9 @@ const eventPool = require('../eventPool');
 // Mock console.log to capture the output
 const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation();
 
+//spy on eventPool.emit
+jest.spyOn(eventPool, 'emit');
+
 describe('Driver Event Handlers', () => {
   afterEach(() => {
     jest.clearAllMocks();
