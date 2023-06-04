@@ -1,3 +1,5 @@
+'use strict';
+
 const { handlePickup, handleDelivered } = require('./handler');
 const eventPool = require('../eventPool');
 

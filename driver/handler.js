@@ -1,25 +1,27 @@
+'use strict';
+
 const eventPool = require('../eventPool');
 
-function handlePickup(orderId) {
-  console.log(`DRIVER: picked up ${orderId}`);
-  const payload = {
-    store: '1-206-flowers',
-    orderId,
-    customer: 'Jamal Braun',
-    address: 'Schmittfort, LA',
-  };
+
+function handlePickup(payload) {
+  console.log(`DRIVER: picked up ${payload.orderId}`);
+
   eventPool.emit('in-transit', payload);
 }
 
-function handleDelivered(orderId) {
-  console.log(`DRIVER: delivered ${orderId}`);
-  const payload = {
-    store: '1-206-flowers',
-    orderId,
-    customer: 'Jamal Braun',
-    address: 'Schmittfort, LA',
-  };
+function handleDelivered(payload) {
+  console.log(`DRIVER: delivered ${payload.orderId}`);
+
   eventPool.emit('delivered', payload);
 }
 
-module.exports = { handlePickup, handleDelivered };
+const handlePickupAndDelivery = (payload) => {
+  setTimeout(() => {
+    handlePickup(payload);
+  }, 1000);
+  setTimeout(() => {
+    handleDelivered(payload);
+  }, 2000);
+};
+
+module.exports = { handlePickup, handleDelivered, handlePickupAndDelivery };
