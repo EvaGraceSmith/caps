@@ -24,4 +24,4 @@ const handlePickupAndDelivery = (payload) => {
   }, 2000);
 };
 
-module.exports = { handlePickup, handleDelivered, handlePickupAndDelivery };
+module.exports = { handlePickupAndDelivery };

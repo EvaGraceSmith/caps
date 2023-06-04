@@ -45,7 +45,7 @@ for now I have none and do not require one
 
 Four terminals are required to run this application in it's entirety:
 
- /caps `nodemon`
+ /caps `node hub.js`
  /vendor `node index.js`
  /driver `node index.js`
 
