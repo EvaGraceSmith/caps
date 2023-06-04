@@ -8,7 +8,7 @@ const { Server } = require('socket.io');
 const server = new Server();
 const capsNamespace = server.of('/caps');
 const Queue = require('./lib/queue');
-let orderQueue = new Queue();
+const orderQueue = new Queue();
 
 // function logger(event, payload){
 //   const timestamp = new Date();
@@ -22,25 +22,35 @@ capsNamespace.on('connection', (socket) => {
 
   //listen for any join events emitted from the client
   socket.on('join', (room) => {
-
     console.log('Possible rooms -----', socket.adapter.rooms);
     console.log('Payload is in this room ---- ', room);
     socket.join(room);
     console.log('Joined room -----', socket.adapter.rooms);
-
   });
 
 
-
+//VENDOR EVENTS
   socket.on('pickup', (payload) => {
     console.log('EVENT:', { event: 'pickup', payload });
     // DONE: step ONE.  store all messages in queue
     // let driverQueue = orderQueue.read('driver', payload.store);
+    // this is a variable called driverQueue that is a reference to the queue that is stored in the orderQueue object
     let driverQueue = orderQueue.read('driver');
     // first time we run our server, this queue won't exist.  we need validation
     if(!driverQueue){
       // let driverKey = orderQueue.store('driver', payload.store, new Queue);
+
+      //this is the variable called driverKey
+      // driverKey takes the value of the key that is returned from the store method
+      //'driver' is the key that we are storing
+      // new Queue is the value that we are storing
+      // orderQueue is the object that we are storing the key/value pair in
+      // .store is the method that we are using to store the key/value pair
       let driverKey = orderQueue.store('driver',  new Queue);
+      // driverQueue is the variable that we are assigning the value of the key that we just stored
+      // orderQueue is the object that we are reading the key/value pair from
+      // .read is the method that we are using to read the key/value pair
+      // driverKey is the key that we are reading
       driverQueue = orderQueue.read(driverKey);
     }
     // now that we KNOW we have a currentQueue, lets store the incoming message
@@ -67,11 +77,11 @@ capsNamespace.on('connection', (socket) => {
   socket.on('received', (payload) => {
     console.log('received order ', payload.orderId);
     // step TWO.  remove messages from queue
-    let currentQueue = orderQueue.read(payload.store);
+    let currentQueue = orderQueue.read('driver');
     if(!currentQueue) {
       throw new Error('we have messages but no queue!');
     }
-    let message = currentQueue.remove(payload.store);
+    let message = currentQueue.remove(payload.orderId);
     capsNamespace.emit('received', message);
   });
 
