@@ -35,7 +35,7 @@ capsNamespace.on('connection', (socket) => {
     // DONE: step ONE.  store all messages in queue
     // let driverQueue = orderQueue.read('driver', payload.store);
     // this is a variable called driverQueue that is a reference to the queue that is stored in the orderQueue object
-    let driverQueue = orderQueue.read('driver');
+    let driverQueue = orderQueue.read(payload.queueId);
     // first time we run our server, this queue won't exist.  we need validation
     if(!driverQueue){
       // let driverKey = orderQueue.store('driver', payload.store, new Queue);
@@ -46,7 +46,7 @@ capsNamespace.on('connection', (socket) => {
       // new Queue is the value that we are storing
       // orderQueue is the object that we are storing the key/value pair in
       // .store is the method that we are using to store the key/value pair
-      let driverKey = orderQueue.store('driver',  new Queue);
+      let driverKey = orderQueue.store(payload.queueId,  new Queue);
       // driverQueue is the variable that we are assigning the value of the key that we just stored
       // orderQueue is the object that we are reading the key/value pair from
       // .read is the method that we are using to read the key/value pair
@@ -77,7 +77,7 @@ capsNamespace.on('connection', (socket) => {
   socket.on('received', (payload) => {
     console.log('received order ', payload.orderId);
     // step TWO.  remove messages from queue
-    let currentQueue = orderQueue.read('driver');
+    let currentQueue = orderQueue.read(payload.queueId);
     if(!currentQueue) {
       throw new Error('we have messages but no queue!');
     }
@@ -87,8 +87,8 @@ capsNamespace.on('connection', (socket) => {
 
 //get all messages from queue
   //TODO: Step THREE.  create an event called GET-MESSAGES, that the recipient can emit so that they can obtain any missed messages
-  socket.on('getAll-delivered-orders', (payload) => {
-    console.log('attempting to get messages');
+  socket.on('getAll', (payload) => {
+    console.log('attempting to get all messages');
     // let currentQueue = orderQueue.read(payload.store);
     let currentQueue = orderQueue.read(payload.queueId);
     if(currentQueue && currentQueue.data){

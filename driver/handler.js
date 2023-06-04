@@ -4,6 +4,7 @@ function handlePickup(orderId) {
   console.log(`DRIVER: picked up ${orderId}`);
   const payload = {
     store: '1-206-flowers',
+    queueId: 'driver',
     orderId,
     customer: 'Jamal Braun',
     address: 'Schmittfort, LA',

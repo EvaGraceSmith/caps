@@ -3,7 +3,7 @@
 const io = require('socket.io-client');
 const capsSocket = io.connect('http://localhost:3000/caps');
 
-
+capsSocket.emit('getAll', { queueId: 'vendor' }); //was just 'driver'
 capsSocket.on('connect', () => {
     console.log('Vendor connected to CAPS hub');
 
@@ -24,8 +24,8 @@ capsSocket.on('delivered', (payload) => {
 setInterval(() => {
     const order = {
         store: '1-206-flowers',
+        queueId: 'vendor',
         orderId: generateOrderId(),
-        driverId: 0,
         customer: generateCustomerName(),
         address: generateAddress(),
     };

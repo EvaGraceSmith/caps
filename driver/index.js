@@ -5,6 +5,7 @@ const capsSocket = io.connect('http://localhost:3000/caps');
 const Chance = require('chance');
 let chance = new Chance();
 let driverId= chance.guid();
+capsSocket.emit('getAll', { queueId: 'driver' }); //was just 'driver'
 
 capsSocket.on('connect', () => {
   console.log('Driver connected to CAPS hub');
