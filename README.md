@@ -1,6 +1,6 @@
 
 
-# LAB - Class 11: Event Driven Applications
+# LAB - Class 11, 12, 13: Event Driven Applications
 
 ### Author: Eva Grace Smith
 
