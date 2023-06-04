@@ -23,11 +23,13 @@ Major functionality to cover in lab:
 
 ### Collaborators
 
+* [Ryan Galloway](https://github.com/rkgallaway)
 * [Hayden Cooper](https://github.com/Hcooper23)
 * [Katherine Lee](https://github.com/KatiLee)
 * [Reece Renninger](https://github.com/ReeceRenninger)
+* [Daniel Frey](https://github.com/DSFrey)
 * [Dustin Yelland](https://github.com/dustinyschild)
-* [Mark R Smith](https://github.com/markmrsmith)
+* [Mark R Smith](https://github.com/markmrsmith) 
 
 ### Setup
 
@@ -38,7 +40,12 @@ for now I have none and do not require one
 
 #### How to initialize/run your application (where applicable)
 
- `nodemon`
+Four terminals are required to run this application in it's entirety:
+
+ /caps `nodemon`
+ /vendor `node index.js`
+ /driver `node index.js`
+ /acme-vendor `node index.js`
 
 #### How to use your library (where applicable)
 
