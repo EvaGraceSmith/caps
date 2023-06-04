@@ -28,10 +28,11 @@ As a developer, I want to create an event driven system so that I can write code
 - [GitHub Actions ci/cd](https://github.com/EvaGraceSmith/caps/actions)
 <!-- - [back-end server url](http://xyz.com) (when applicable) -->
 
+Utilized ChatGPT for initial framework.
+
 ### Collaborators
 
-* [Ryan Galloway](https://github.com/rkgallaway)
-* [Hayden Cooper](https://github.com/Hcooper23)
+* [Ryan Galloway](https://github.com/rkgallaway)- Utilized class code for guidance
 * [Mark R Smith](https://github.com/markmrsmith)
 
 ### Setup
@@ -46,8 +47,7 @@ for now I have none and do not require one
 Four terminals are required to run this application in it's entirety:
 
  /caps `node hub.js`
- /vendor `node index.js`
- /driver `node index.js`
+
 
 
 <!-- #### How to use your library (where applicable)
@@ -65,6 +65,6 @@ Four terminals are required to run this application in it's entirety:
 
 ## UML - Lab 11
 
-![UML](img/lab11-uml.png)
+![UML](img/lab11-UML.png)
 
 
