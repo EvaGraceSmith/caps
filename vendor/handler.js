@@ -1,19 +1,25 @@
+'use strict'
+
 const eventPool = require('../eventPool');
+let Chance = require('chance');
 
+var chance = new Chance();
 
-function simulatePickup(store, orderId, customer, address) {
-  const order = {
-    store: store,
-    orderId: orderId,
-    customer: customer,
-    address: address,
+const simulatePickup = (payload=null) => {
+  if (!payload) {
+  payload = {
+    store: '1-206-flowers',
+    orderId: chance.guid(),
+    customer: chance.name(),
+    address: chance.address(),
   };
-
-  eventPool.emit('pickup', order);
+  }
+  console.log(`VENDOR: Order ${payload.orderId} has been received`);
+  eventPool.emit('pickup', payload);
 }
 
-function handleDelivered(orderId) {
-  console.log(`VENDOR: Thank you for delivering ${orderId}`);
+function handleDelivered(payload) {
+  console.log(`VENDOR: Thank you for delivering ${payload.orderId}`);
 }
 
 module.exports = { simulatePickup, handleDelivered };
