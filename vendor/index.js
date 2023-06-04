@@ -3,16 +3,16 @@
 const io = require('socket.io-client');
 const capsSocket = io.connect('http://localhost:3000/caps');
 
-capsSocket.emit('getAll', { queueId: 'vendor' }); //was just 'driver'
+capsSocket.emit('getAll', { queueId: '1-206-flowers' }); //was just 'driver'
 capsSocket.on('connect', () => {
-    console.log('Vendor connected to CAPS hub');
+    console.log('1-206-flowers connected to CAPS hub');
 
     capsSocket.emit('join', '1-206-flowers');
     capsSocket.emit('get-all-delievered-orders', {store: '1-206-flowers'});
 });
 
 capsSocket.on('disconnect', () => {
-    console.log('Vendor disconnected from CAPS hub');
+    console.log('1-206-flowers disconnected from CAPS hub');
 });
 
 
@@ -24,7 +24,7 @@ capsSocket.on('delivered', (payload) => {
 setInterval(() => {
     const order = {
         store: '1-206-flowers',
-        queueId: 'vendor',
+        queueId: '1-206-flowers',
         orderId: generateOrderId(),
         customer: generateCustomerName(),
         address: generateAddress(),

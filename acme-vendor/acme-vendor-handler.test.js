@@ -1,4 +1,4 @@
-const { simulatePickup, handleDelivered } = require('./handler');
+const { simulatePickup, handleDelivered } = require('./acme-handler');
 
 const eventPool = require('../eventPool');
 
@@ -11,13 +11,13 @@ const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation();
 //spy on eventPool.emit
 jest.spyOn(eventPool, 'emit');
 
-describe('1-206-flowers Event Handlers', () => {
+describe('acme-widgets Event Handlers', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
 
   test('simulatePickup should emit pickup event with the correct payload', () => {
-    const storeName = '1-206-flowers';
+    const storeName = 'acme-widgets';
     orderId = chance.guid(),
     customer = chance.name(),
     address = chance.address(),
@@ -36,7 +36,7 @@ describe('1-206-flowers Event Handlers', () => {
 
   test('handleDelivered should log the correct message', () => {
     const orderId = 'e3669048-7313-427b-b6cc-74010ca1f8f0';
-    const expectedMessage = `1-206-flowers: Thank you for delivering ${orderId}`;
+    const expectedMessage = `acme-widgets: Thank you for delivering ${orderId}`;
 
     handleDelivered(orderId);
 

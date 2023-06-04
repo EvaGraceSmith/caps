@@ -49,6 +49,7 @@ for now I have none and do not require one
 
 - Tests have been built out to ensure the handlers are emitting the correct messages.
 - These can be ran using npm test (filename).
+- Tests created utilizing [chatGPT](https://chat.openai.com/share/1e99d194-5b59-413a-a7ed-cf8e67caffd3) per class guidelines.
 
 
 
