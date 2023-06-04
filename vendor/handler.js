@@ -3,7 +3,7 @@
 const eventPool = require('../eventPool');
 let Chance = require('chance');
 
-var chance = new Chance();
+let chance = new Chance();
 
 const simulatePickup = (payload=null) => {
   if (!payload) {

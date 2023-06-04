@@ -1,6 +1,6 @@
 const eventPool = require('../eventPool');
 const Chance = require('chance');
-const { simulatePickup, handleDelivered } = require('../yourModule'); // Replace 'yourModule' with the actual file name
+const { simulatePickup, handleDelivered } = require('./handler.js'); // Replace 'yourModule' with the actual file name
 
 jest.mock('../eventPool'); // Mock the eventPool module
 
@@ -24,9 +24,9 @@ describe('simulatePickup', () => {
   });
 
   it('should generate a random payload and emit the "pickup" event if no payload is provided', () => {
-    const generateSpy = jest.spyOn(chance, 'guid').mockReturnValue('456');
-    jest.spyOn(chance, 'name').mockReturnValue('Jane Smith');
-    jest.spyOn(chance, 'address').mockReturnValue('456 Elm St');
+    const generateSpy = jest.spyOn(Chance.prototype, 'guid').mockReturnValue('456');
+    jest.spyOn(Chance.prototype, 'name').mockReturnValue('Jane Smith');
+    jest.spyOn(Chance.prototype, 'address').mockReturnValue('456 Elm St');
     const emitSpy = jest.spyOn(eventPool, 'emit');
 
     simulatePickup();
