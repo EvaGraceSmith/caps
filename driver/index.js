@@ -1,5 +1,7 @@
-const { handlePickup, handleDelivered } = require('./handler');
+'use strict';
+
+const { handlePickupAndDelivery} = require('./handler');
 const eventPool = require('../eventPool');
 
-eventPool.on('pickup', handlePickup);
-eventPool.on('delivered', handleDelivered);
+
+eventPool.on('pickup', handlePickupAndDelivery);

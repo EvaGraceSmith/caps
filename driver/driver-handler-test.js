@@ -1,43 +1,45 @@
-const { handlePickup, handleDelivered } = require('./handler');
 const eventPool = require('../eventPool');
+const { handlePickupAndDelivery } = require('./handler.js'); // Replace 'yourModule' with the actual file name
 
-// Mock console.log to capture the output
-const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation();
+jest.mock('../eventPool'); // Mock the eventPool module
 
-describe('Driver Event Handlers', () => {
+describe('handlePickupAndDelivery', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  test('handlePickup should log the correct message and emit in-transit event', () => {
-    const orderId = 'e3669048-7313-427b-b6cc-74010ca1f8f0';
-    const expectedPickupMessage = `DRIVER: picked up ${orderId}`;
-    const expectedInTransitEventPayload = {
-      store: '1-206-flowers',
-      orderId,
-      customer: 'Jamal Braun',
-      address: 'Schmittfort, LA',
-    };
+  it('should call handlePickup and handleDelivered with the correct payload', () => {
+    const payload = { orderId: '123' };
+    const handlePickupSpy = jest.spyOn(handlePickupAndDelivery, 'handlePickup');
+    const handleDeliveredSpy = jest.spyOn(handlePickupAndDelivery, 'handleDelivered');
 
-    handlePickup(orderId);
+    handlePickupAndDelivery(payload);
 
-    expect(consoleLogSpy).toHaveBeenCalledWith(expectedPickupMessage);
-    expect(eventPool.emit).toHaveBeenCalledWith('in-transit', expectedInTransitEventPayload);
+    expect(handlePickupSpy).toHaveBeenCalledWith(payload);
+    expect(handleDeliveredSpy).toHaveBeenCalledWith(payload);
   });
 
-  test('handleDelivered should log the correct message and emit delivered event', () => {
-    const orderId = 'e3669048-7313-427b-b6cc-74010ca1f8f0';
-    const expectedDeliveredMessage = `DRIVER: delivered ${orderId}`;
-    const expectedDeliveredEventPayload = {
-      store: '1-206-flowers',
-      orderId,
-      customer: 'Jamal Braun',
-      address: 'Schmittfort, LA',
-    };
+  it('should emit "in-transit" event with the correct payload after 1 second', () => {
+    const payload = { orderId: '123' };
+    jest.useFakeTimers();
 
-    handleDelivered(orderId);
+    handlePickupAndDelivery(payload);
 
-    expect(consoleLogSpy).toHaveBeenCalledWith(expectedDeliveredMessage);
-    expect(eventPool.emit).toHaveBeenCalledWith('delivered', expectedDeliveredEventPayload);
+    jest.advanceTimersByTime(1000);
+    expect(eventPool.emit).toHaveBeenCalledWith('in-transit', payload);
+
+    jest.useRealTimers();
+  });
+
+  it('should emit "delivered" event with the correct payload after 2 seconds', () => {
+    const payload = { orderId: '123' };
+    jest.useFakeTimers();
+
+    handlePickupAndDelivery(payload);
+
+    jest.advanceTimersByTime(2000);
+    expect(eventPool.emit).toHaveBeenCalledWith('delivered', payload);
+
+    jest.useRealTimers();
   });
 });

@@ -1,34 +1,59 @@
-const { simulatePickup, handleDelivered } = require('./handler');
 const eventPool = require('../eventPool');
+const Chance = require('chance');
+const { simulatePickup, handleDelivered } = require('./handler.js'); // Replace 'yourModule' with the actual file name
 
-// Mock console.log to capture the output
-const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation();
+jest.mock('../eventPool'); // Mock the eventPool module
 
-describe('Vendor Event Handlers', () => {
+describe('simulatePickup', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  test('simulatePickup should emit pickup event with the correct payload', () => {
-    const storeName = '1-206-flowers';
-    const orderIdRegex = /[a-z0-9]{8}-[a-z0-9]{4}-4[a-z0-9]{3}-[89ab][a-z0-9]{3}-[a-z0-9]{12}/i;
+  it('should emit the "pickup" event with the provided payload', () => {
+    const payload = {
+      store: '1-206-flowers',
+      orderId: '123',
+      customer: 'John Doe',
+      address: '123 Main St',
+    };
+    const emitSpy = jest.spyOn(eventPool, 'emit');
 
-    simulatePickup(storeName);
+    simulatePickup(payload);
 
-    expect(eventPool.emit).toHaveBeenCalledWith('pickup', expect.objectContaining({
-      store: storeName,
-      orderId: expect.stringMatching(orderIdRegex),
-      customer: expect.any(String),
-      address: expect.any(String),
-    }));
+    expect(emitSpy).toHaveBeenCalledWith('pickup', payload);
   });
 
-  test('handleDelivered should log the correct message', () => {
-    const orderId = 'e3669048-7313-427b-b6cc-74010ca1f8f0';
-    const expectedMessage = `VENDOR: Thank you for delivering ${orderId}`;
+  it('should generate a random payload and emit the "pickup" event if no payload is provided', () => {
+    const generateSpy = jest.spyOn(Chance.prototype, 'guid').mockReturnValue('456');
+    jest.spyOn(Chance.prototype, 'name').mockReturnValue('Jane Smith');
+    jest.spyOn(Chance.prototype, 'address').mockReturnValue('456 Elm St');
+    const emitSpy = jest.spyOn(eventPool, 'emit');
 
-    handleDelivered(orderId);
+    simulatePickup();
 
-    expect(consoleLogSpy).toHaveBeenCalledWith(expectedMessage);
+    expect(generateSpy).toHaveBeenCalled();
+    expect(emitSpy).toHaveBeenCalledWith('pickup', {
+      store: '1-206-flowers',
+      orderId: '456',
+      customer: 'Jane Smith',
+      address: '456 Elm St',
+    });
+
+    generateSpy.mockRestore();
+  });
+});
+
+describe('handleDelivered', () => {
+  it('should log the correct message to the console', () => {
+    const payload = {
+      orderId: '123',
+    };
+    const consoleLogSpy = jest.spyOn(console, 'log');
+
+    handleDelivered(payload);
+
+    expect(consoleLogSpy).toHaveBeenCalledWith(`VENDOR: Thank you for delivering ${payload.orderId}`);
+
+    consoleLogSpy.mockRestore();
   });
 });
