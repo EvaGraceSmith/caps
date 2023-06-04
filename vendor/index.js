@@ -8,7 +8,7 @@ capsSocket.on('connect', () => {
     console.log('Vendor connected to CAPS hub');
 
     capsSocket.emit('join', '1-206-flowers');
-    capsSocket.emit('get-all-my-orders', {store: '1-206-flowers'});
+    capsSocket.emit('get-all-delievered-orders', {store: '1-206-flowers'});
 });
 
 capsSocket.on('disconnect', () => {

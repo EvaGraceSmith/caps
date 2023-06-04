@@ -50,8 +50,12 @@ for now I have none and do not require one
 - Tests have been built out to ensure the handlers are emitting the correct messages.
 - These can be ran using npm test (filename).
 
-#### UML
 
-## UML
+
+## UML - Lab 12
 
 ![UML](img/caps-uml.png)
+
+#### UML- Lab 13
+
+![UML](img/lab13-uml.png)

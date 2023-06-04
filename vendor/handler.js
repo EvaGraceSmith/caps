@@ -12,6 +12,12 @@ function simulatePickup(store, orderId, customer, address) {
   eventPool.emit('pickup', order);
 }
 
+//add a payload to the emit
+// let payload = {
+//     event: 'pickup',
+//     messageId: order.id,
+//     queueId:
+
 function handleDelivered(orderId) {
   console.log(`VENDOR: Thank you for delivering ${orderId}`);
 }

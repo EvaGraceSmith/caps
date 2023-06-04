@@ -4,13 +4,13 @@ const io = require('socket.io-client');
 const capsSocket = io.connect('http://localhost:3000/caps');
 const Chance = require('chance');
 let chance = new Chance();
-let DriverId= chance.guid();
+let driverId= chance.guid();
 
 capsSocket.on('connect', () => {
   console.log('Driver connected to CAPS hub');
   capsSocket.emit('join', '1-206-flowers');
 
-  capsSocket.emit('get-all-my-orders', {driverId: `$[DriverId]`});
+  capsSocket.emit('get-all-my-orders', {driverId: `${[driverId]}`});
 });
 
 
@@ -20,7 +20,7 @@ capsSocket.on('disconnect', () => {
 
 capsSocket.on('pickup', (payload) => {
   console.log(`Picking up order ${payload.orderId}`);
-  payload.driverId=DriverId;
+  //payload.driverId=DriverId;
   capsSocket.emit('in-transit', payload);
 });
 
@@ -33,6 +33,6 @@ capsSocket.on('in-transit', (payload) => {
 
 capsSocket.on('delivered', (payload) => {
   console.log(`Delivered order ${payload.orderId}`);
-  capsSocket.emit('received', payload.orderId);
+  capsSocket.emit('received', payload);
 });
 
