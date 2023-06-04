@@ -29,7 +29,7 @@ Major functionality to cover in lab:
 * [Reece Renninger](https://github.com/ReeceRenninger)
 * [Daniel Frey](https://github.com/DSFrey)
 * [Dustin Yelland](https://github.com/dustinyschild)
-* [Mark R Smith](https://github.com/markmrsmith) 
+* [Mark R Smith](https://github.com/markmrsmith)
 
 ### Setup
 
@@ -47,9 +47,9 @@ Four terminals are required to run this application in it's entirety:
  /driver `node index.js`
  /acme-vendor `node index.js`
 
-#### How to use your library (where applicable)
+<!-- #### How to use your library (where applicable)
 
-#### Features / Routes
+#### Features / Routes -->
 
 
 #### Tests
