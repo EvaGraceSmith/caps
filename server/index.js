@@ -70,7 +70,8 @@ capsNamespace.on('connection', (socket) => {
 
   socket.on('delivered', (payload) => {
     console.log('EVENT:', { event: 'delivered', payload });
-    capsNamespace.to(payload.store).emit('delivered', payload);
+    // capsNamespace.to(payload.store).emit('delivered', payload);
+    capsNamespace.emit('delivered', payload);
   });
 
 
