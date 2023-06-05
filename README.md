@@ -58,11 +58,13 @@ Four terminals are required to run this application in it's entirety:
 - These can be ran using npm test (filename).
 - Tests created utilizing [chatGPT](https://chat.openai.com/share/1e99d194-5b59-413a-a7ed-cf8e67caffd3) per class guidelines.
 
+## UML - Lab 11
 
+![UML](img/lab11-uml.png)
 
 ## UML - Lab 12
 
-![UML](img/caps-uml.png)
+![UML](img/lab12-uml.png)
 
 #### UML- Lab 13
 
