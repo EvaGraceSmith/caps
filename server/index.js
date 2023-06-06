@@ -31,7 +31,9 @@ capsNamespace.on('connection', (socket) => {
 
 //VENDOR EVENTS
   socket.on('pickup', (payload) => {
-    console.log('EVENT:', { event: 'pickup', payload });
+    // console.log('EVENT:', { event: 'pickup', payload });
+    payload.event = 'pickup';
+    payload.queueId = 'driver';
     // DONE: step ONE.  store all messages in queue
     // let driverQueue = orderQueue.read('driver', payload.store);
     // this is a variable called driverQueue that is a reference to the queue that is stored in the orderQueue object
@@ -56,21 +58,30 @@ capsNamespace.on('connection', (socket) => {
     // now that we KNOW we have a currentQueue, lets store the incoming message
     // because that unique messageId is a string, JavaScript will maintain order for us.
     // driverQueue.store(payload.orderId, payload);
-    driverQueue.store(payload.messageId, payload);
+    driverQueue.store(payload.orderId, payload);
     capsNamespace.emit('pickup', payload);
   });
 
 
+
   socket.on('in-transit', (payload) => {
-    console.log('EVENT:', { event: 'in-transit', payload });
     capsNamespace.emit('in-transit', payload);
 
   });
 
 
   socket.on('delivered', (payload) => {
-    console.log('EVENT:', { event: 'delivered', payload });
-    capsNamespace.to(payload.store).emit('delivered', payload);
+    // console.log('EVENT:', { event: 'delivered', payload });
+    payload.event = 'delivered';
+    let driverQueue = orderQueue.read(payload.store);
+    if(!driverQueue){
+      let driverKey = orderQueue.store(payload.store,  new Queue);
+      driverQueue = orderQueue.read(driverKey);
+    }
+    driverQueue.store(payload.orderId, payload);
+
+    // capsNamespace.to(payload.store).emit('delivered', payload);
+    capsNamespace.emit('delivered', payload);
   });
 
 
@@ -81,14 +92,15 @@ capsNamespace.on('connection', (socket) => {
     if(!currentQueue) {
       throw new Error('we have messages but no queue!');
     }
+    console.log('deletng order ', payload.orderId, 'from', payload.queueId );
     let message = currentQueue.remove(payload.orderId);
-    capsNamespace.emit('received', message);
+    //capsNamespace.emit('received', message);
   });
 
 //get all messages from queue
   //TODO: Step THREE.  create an event called GET-MESSAGES, that the recipient can emit so that they can obtain any missed messages
   socket.on('getAll', (payload) => {
-    console.log('attempting to get all messages');
+    console.log('attempting to get all messages from ', payload.queueId);
     // let currentQueue = orderQueue.read(payload.store);
     let currentQueue = orderQueue.read(payload.queueId);
     if(currentQueue && currentQueue.data){
@@ -98,7 +110,8 @@ capsNamespace.on('connection', (socket) => {
         // maybe sending to the correct room also works (if two vendors)
         let message = currentQueue.read(messageId);
         // socket.emit('delivered', currentQueue.read(messageId));
-        socket.emit(payload.event, message);
+        //console.log('EVENT:', { event: `${message.event}`, message });
+        socket.emit(message.event, message);
       });
     }
   });

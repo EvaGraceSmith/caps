@@ -5,7 +5,7 @@ const capsSocket = io.connect('http://localhost:3000/caps');
 
 capsSocket.on('connect', () => {
   console.log('Driver connected to CAPS hub');
-  capsSocket.emit('join', '1-206-flowers', 'acme-widgets');
+  // capsSocket.emit('join', '1-206-flowers', 'acme-widgets');
 
   capsSocket.emit('getAll', {queueId: 'driver'});
 });
@@ -17,9 +17,9 @@ capsSocket.on('disconnect', () => {
 
 capsSocket.on('pickup', (payload) => {
   console.log(`picking up order ${payload.orderId} from `, payload.store);
-
-  //payload.driverId=DriverId;
-  capsSocket.emit('in-transit', payload);
+  setTimeout(() => {
+    capsSocket.emit('in-transit', payload);
+  }, 1000);
 });
 
 capsSocket.on('in-transit', (payload) => {
