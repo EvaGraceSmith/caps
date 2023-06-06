@@ -1,20 +1,25 @@
-const eventPool = require('../eventPool');
+const { Chance } = require('chance');
+const chance = new Chance();
+let orderNumber = 1;
+const store = 'acme-widgets';
 
 
-function simulatePickup(store, orderId, customer, address) {
+function simulatePickup(capsSocket) {
   const order = {
     store: store,
-    queueId: 'acme-widgets',
-    orderId: orderId,
-    customer: customer,
-    address: address,
+    queueId: store,
+    orderId: orderNumber++,
+    customer: chance.name(),
+    address: chance.address(),
   };
-
-  eventPool.emit('pickup', order);
+  console.log(`${order.customer} ordering ${order.orderId}`);
+  capsSocket.emit('pickup', order);
 }
 
-function handleDelivered(orderId) {
-  console.log(`acme-widgets: Thank you for delivering ${orderId}`);
+function handleDelivered(capsSocket, payload) {
+  console.log(`Thank you ${payload.customer} for your order ${payload.orderId}`);
+  payload.queueId = payload.store;
+  capsSocket.emit('received', payload);
 }
 
-module.exports = { simulatePickup, handleDelivered };
+module.exports = { simulatePickup, handleDelivered, store };

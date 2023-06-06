@@ -17,9 +17,9 @@ capsSocket.on('disconnect', () => {
 
 capsSocket.on('pickup', (payload) => {
   console.log(`picking up order ${payload.orderId} from `, payload.store);
-
-  //payload.driverId=DriverId;
-  capsSocket.emit('in-transit', payload);
+  setTimeout(() => {
+    capsSocket.emit('in-transit', payload);
+  }, 1000);
 });
 
 capsSocket.on('in-transit', (payload) => {
